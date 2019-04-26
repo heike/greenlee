@@ -952,7 +952,7 @@ class: inverse, middle, center
 
 - Wildly popular package for statistical graphics: by now about 500k monthly downloads from CRAN ( more than 10k times per day)
 
-&lt;img src="slideset_files/figure-html/unnamed-chunk-28-1.png" height="300" /&gt;
+&lt;img src="slideset_files/figure-html/unnamed-chunk-28-1.png" height="450" /&gt;
 
 ---
 
@@ -984,7 +984,7 @@ ggplot(data = mtcars, aes(x = wt, y = mpg)) +
   geom_point()
 ```
 
-&lt;img src="slideset_files/figure-html/unnamed-chunk-29-1.png" height="300" /&gt;
+&lt;img src="slideset_files/figure-html/unnamed-chunk-29-1.png" height="400" /&gt;
 ---
 
 ## Mappings and Layers
@@ -996,7 +996,7 @@ ggplot(data = mtcars, aes(x = wt, y = mpg)) +
   geom_smooth()
 ```
 
-&lt;img src="slideset_files/figure-html/unnamed-chunk-30-1.png" height="300" /&gt;
+&lt;img src="slideset_files/figure-html/unnamed-chunk-30-1.png" height="400" /&gt;
 ---
 
 ## Mappings and Layers
@@ -1007,10 +1007,10 @@ mtcars$name = row.names(mtcars)
 ggplot(data = mtcars, aes(x = wt, y = mpg)) +
   geom_point() +
   geom_smooth() +
-  geom_text(aes(label = name))
+  geom_text(aes(label = name), size = 3)
 ```
 
-&lt;img src="slideset_files/figure-html/unnamed-chunk-31-1.png" height="300" /&gt;
+&lt;img src="slideset_files/figure-html/unnamed-chunk-31-1.png" height="400" /&gt;
 
 ---
 

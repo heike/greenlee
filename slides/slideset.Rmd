@@ -483,10 +483,9 @@ class: inverse, middle, center
 ```{r, eval = FALSE}
 if (!require(curl)) install.packages("curl")
 curl::curl_download(
-  "https://raw.githubusercontent.com/heike/greenlee/master/01-Introduction-to-R/code/2-basics.R",
-  "2-basics.R"
-)
-file.edit("2-basics.R")
+   "https://raw.githubusercontent.com/heike/greenlee/master/code/basics.R",
+   "basics.R")
+file.edit("basics.R")
 ```
 
 ---
