@@ -1,0 +1,820 @@
+---
+title: "Intro to R - Hello WoRld"
+author: "Heike Hofmann"
+date: "`r Sys.Date()`"
+output:
+  xaringan::moon_reader:
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+class: inverse, center, middle
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, dpi= 300, fig.width = 3, fig.height = 3)
+options(width=60)
+library(tidyverse)
+```
+
+# R, RStudio, and RMarkdown
+
+---
+
+# Outline
+
+- What is R
+
+- Example Data Exploration
+
+- Basic R functionality
+
+- Some plots with ggplot2
+
+---
+
+## R is ...
+
+* __Free__ to use
+
+* __Extensible__: Over 14,000 user contributed add-on packages currently on CRAN!
+
+* __Powerful__: With the right tools, get more work done, faster.
+
+* __Flexible__: Not a question of _can_, but _how_.
+
+* __Frustrating__: Flexibility comes at a cost (easy to shoot yourself in the foot!).
+
+```{r}
+pkgs <- available.packages(repos='http://cran.us.r-project.org')
+nrow(pkgs)
+```
+
+---
+
+## R does ...
+
+* __Graphics, statistics, machine learning, etc.__
+
+* __Data acquisition, munging, management__
+
+* __Literate programming (dynamic reports)__
+
+* __Web applications__
+
+We will touch on some of these aspects.
+Slides and material are available at
+ http://heike.github.io/greenlee
+
+---
+class: middle, center
+#  http://heike.github.io/greenlee
+
+---
+
+## Installing R
+
+- Go to [http://www.r-project.org/](http://www.r-project.org/)
+
+- Click the CRAN link on the left, and pick a download site (0-Cloud is a good choice)
+
+- Choose link based on your OS
+
+- On Windows, choose the "base" subdirectory to install R.
+
+- On OS X, choose the .pkg file to install R.
+
+---
+
+## Installing RStudio
+
+- Browse to [https://www.rstudio.com/](https://www.rstudio.com/)
+
+- Mouse over Products and click RStudio
+
+- Choose RStudio Desktop
+
+- Click Download RStudio Desktop
+
+- Choose the installer appropriate for your platform
+
+
+---
+class: inverse
+## RStudio is ... 
+
+[From Julie Lowndes](http://jules32.github.io/resources/RStudio_intro/):  
+
+<blockquote>
+<p style="color:white"><b>If R were an airplane, RStudio would be the airport,</b><br><br>providing many, many supporting services that make it easier for you, the pilot, to take off and go to awesome places. Sure, you can fly an airplane without an airport, but having those runways and supporting infrastructure is a game-changer.</p>
+</blockquote>
+
+---
+
+## The RStudio IDE
+
+<img class="cover" src="images/rstudio-panes.png" alt="">
+
+---
+
+## The RStudio IDE
+
+
+1. **Source editor:** Docking station for multiple files, Useful shortcuts ("Knit"), Highlighting/Tab-completion, Code-checking (R, HTML, JS), Debugging features  
+
+2. **Console window:** Highlighting/Tab-completion, Search recent commands
+
+3. **Environment pane:** Tools for package development, git, etc
+
+4. **Other tabs/panes:** Graphics, R documentation, File system navigation/access
+
+<br>
+<br>
+*Protip:* save yourself the headaches figuring out file paths and instead work in an RStudio R project (popup menu at the top left)
+
+---
+
+## Markdown
+
+- Markdown is a particular type of **markup** language.
+
+- Markup languages are designed to **produce documents from plain text**.
+
+- Some of you might have heard of is **LaTeX**. This is another (less human friendly) markup language for creating pdf documents.
+
+- LaTeX gives you much greater control, but it is restricted to pdf and has a much greater learning curve.
+
+- **Markdown** is becoming a **standard**. Many websites will generate HTML from Markdown (e.g. GitHub, Stack Overflow, reddit, ...).
+
+---
+
+## Markdown is easy
+
+```{r eval=FALSE}
+ *italic*
+ **bold**
+
+ # Header 1
+ ## Header 2
+ ### Header 3
+
+ - List item 1
+ - List item 2
+    - item 2a
+    - item 2b
+
+ 1. Numbered list item 1
+ 2. Numbered list item 2
+    - item 2a
+    - item 2b
+```
+
+
+Have a look at RStudio's [RMarkdown cheat sheet](https://www.rstudio.com/resources/cheatsheets/)
+
+---
+
+## What is RMarkdown?
+
+- ... an authoring format that enables easy creation of dynamic documents, presentations, and reports from R. 
+
+- it combines the core syntax of markdown with embedded R code chunks that are run so their output can be included in the final document.
+
+- R Markdown documents are fully reproducible (they are automatically regenerated whenever underlying R code or data changes).
+
+---
+
+
+<img class="cover" src="images/rmarkdown.png" alt="">
+
+---
+
+## Why R Markdown?
+
+- **It's simple.** Focus on writing, rather than debugging silly errors.
+
+- **It's flexible.** Markdown was created to simplify writing HTML, but thanks to pandoc, Markdown converts to many different formats!
+
+- **It's dynamic.** Find a critical error? Get a new dataset? Regenerate your report without copy/paste hell!
+
+- **Encourages transparency.** Collaborators (including your future self) will thank you for integrating your analysis & report.
+
+- **Enables interactivity/reactivity.** Allow your audience to explore the analysis (rather than passively read it).
+
+---
+
+<img class="cover" src="images/hello-rmarkdown.png" alt="">
+
+---
+class: inverse
+## Your Turn (5 min) 
+
+
+1. Open RStudio, create a new project.
+
+2. Create a new RMarkdown file and knit it.
+
+3. Navigate to the RMarkdown cheat sheet and download a copy (Google for the link!)
+
+3. Make changes to the markdown formatting and knit again.
+
+4. Export output to different files. Can you create a Word document?
+
+5. If you feel adventurous, change some of the R code and knit again.
+
+---
+class: inverse, middle, center
+# An Example
+
+---
+
+# An Example 
+
+- Kick things off by looking at a real data set in R
+
+- Goal: get the flavor of using R for data management and exploration
+
+- Don't worry about understanding any of the code 
+
+- We will come back to see how things work in more detail
+
+---
+
+## The question: what is the state of math and reading proficiency in Iowa?
+
+- identifying a data source: Iowa Data Portal https://data.iowa.gov/
+
+- [Math and Reading Proficiency by School Year](https://data.iowa.gov/Education/Math-And-Reading-Proficiency-in-Iowa-by-School-Yea/f3h8-mnxi)
+
+- [Map of School Districts](https://data.iowa.gov/Education/2016-2017-Iowa-Public-School-District-Boundaries/e6xn-sdvr)
+
+---
+
+## Getting the data into R
+
+```{r}
+schools <- read.csv("../data/iowa-modified.csv")
+dim(schools)
+head(schools)
+```
+
+---
+
+## Proficiency levels in Ames
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 10, fig.height = 6}
+library(tidyverse)
+schools %>% 
+  filter(dname %in% c("Ames")) %>%
+  ggplot(aes(x = School.Year, y = Perc.Proficient, colour = Topic, shape = Topic)) + 
+  geom_point(size = 3) +
+  facet_wrap(~Grade, labeller="label_both", ncol=4) +
+  theme_bw() +
+  theme(legend.position="bottom") +
+  ggtitle("Trends of Proficiency Levels in the Ames School District") +
+  xlab("School Year") +
+  ylab("Percent Proficiency") +
+  geom_smooth(method = "lm", se=FALSE)
+  
+```
+--
+
+Are students in some years better than others?
+
+---
+
+# Class of ...
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 10, fig.height = 6}
+schools <- schools %>% mutate(
+  classof = School.Year + 12-Grade
+)
+schools %>%  
+  filter(dname %in% c("Ames")) %>%
+  ggplot(aes(x = Grade, y = Perc.Proficient, colour = factor(classof))) + 
+  geom_point(size = 3) +
+  geom_line() +
+  facet_wrap(~Topic, labeller="label_both", ncol=4) +
+  theme_bw() +
+  theme(legend.position="none") +
+  scale_x_continuous(breaks = unique(schools$Grade), 
+                     labels = unique(schools$Grade)) +
+  geom_text(aes(x = Grade + .5, label = classof), 
+            data = filter(schools, dname %in% c("Ames"), Grade == 11)) +
+  geom_text(aes(x = Grade - .5, label = classof), 
+            data = filter(schools, dname %in% c("Ames"), Grade == 3)) +
+  ggtitle("Proficiency Levels in the Ames School District by Class") +
+  ylab("Percent Proficiency") 
+```
+
+--
+
+How do proficiency levels and their trends in Ames compare to the other school districts in Iowa?
+
+---
+
+
+# Iowa School Districts
+
+```{r, echo=FALSE, message=FALSE, warning = FALSE, fig.width=10, fig.height = 5}
+districts <- read_csv("../data/boundaries-2018.csv.zip")
+districts %>% 
+  ggplot(aes(x = long, y = lat, group = group)) +
+  geom_path() +
+  theme_bw() +
+  geom_polygon(data = filter(districts, SchoolDist == "AMES"), fill="steelblue") 
+```
+
+---
+
+# Ames vs Iowa 2017
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 10, fig.height = 6}
+schools %>% 
+  filter(School.Year==2017) %>%
+  ggplot(aes(x = Perc.Proficient, fill=Topic, colour = Topic)) +
+  geom_density(alpha = 0.5) +
+  geom_vline(aes(xintercept = Perc.Proficient, colour = Topic), 
+             data = filter(schools, dname %in% c("Ames"), School.Year==2017)) +
+  facet_wrap(~Grade, ncol=4, labeller = "label_both") +
+  theme_bw() +
+  theme(legend.position="bottom") +
+  xlab("Percent Proficiency") +
+  ggtitle("Densities of Proficiency in Iowa School Districts")
+```
+
+---
+
+# Zero Proficiency?
+
+```{r}
+schools %>% 
+  filter(School.Year == 2017) %>%
+  filter(Perc.Proficient == 0) %>%
+  select(dname, Proficient, Total, Grade)
+```
+
+---
+
+# Ames vs Iowa 2017 in School districts with students
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 10, fig.height = 6}
+schools %>% 
+  filter(School.Year==2017, Total > 0) %>%
+  ggplot(aes(x = Perc.Proficient, fill=Topic, colour = Topic)) +
+  geom_density(alpha = 0.5) +
+  geom_vline(aes(xintercept = Perc.Proficient, colour = Topic), 
+             data = filter(schools, dname %in% c("Ames"), School.Year==2017)) +
+  facet_wrap(~Grade, ncol=4, labeller = "label_both") +
+  theme_bw() +
+  theme(legend.position="bottom") +
+  xlab("Percent Proficiency") +
+  ggtitle("Densities of Proficiency in Iowa School Districts")
+```
+
+
+---
+
+# School Districts over time
+
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 10, fig.height = 6}
+schools %>%
+  filter(Grade == 3) %>%
+  ggplot(aes(x = factor(School.Year), fill = Topic)) + 
+  geom_bar(position="dodge") +
+  theme_bw() + 
+  xlab("School Year") +
+  ggtitle("Number of Grade 3 assessments")
+```
+
+--
+
+What's going on with School Year 2015?
+
+---
+
+# School Year 2015 in Ames
+
+```{r}
+schools %>% 
+  filter(School.Year == 2015, Grade == 3, dname == "Ames")
+```
+
+
+```{r}
+schools <- unique(schools)
+```
+
+---
+
+# School Districts over time (no duplicates)
+
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 10, fig.height = 6}
+schools %>%
+  filter(Grade == 3) %>%
+  ggplot(aes(x = factor(School.Year), fill = Topic)) + 
+  geom_bar(position="dodge") +
+  theme_bw() + 
+  xlab("School Year") +
+  ggtitle("Number of Grade 3 assessments")
+```
+
+
+---
+
+# Number of students over time
+
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 10, fig.height = 6}
+schools %>%
+  filter(Topic == "Math") %>%
+  ggplot(aes(x = factor(School.Year), weight = Total, fill=factor(Grade))) + 
+  geom_bar() +
+  facet_wrap(~Grade, labeller="label_both") +
+  theme_bw() + 
+  xlab("School Year") +
+  ggtitle("Number of students in Iowa") +
+  scale_fill_brewer("Grade", palette = "Paired")
+```
+
+
+---
+
+# Stories of Disappearances and Mergers
+
+```{r, echo=FALSE, warning=FALSE, message=FALSE, fig.width = 10, fig.height = 6}
+schools %>% 
+  filter(dname %in% c("IKM", "IKM-Manning", "Manning")) %>%
+  filter(Topic == "Math") %>%
+  ggplot(aes(x = factor(School.Year), y = Total)) + 
+  geom_point(aes(colour = District.Name, shape = District.Name), size = 3) +
+  facet_wrap(~Topic+Grade, labeller="label_both", ncol = 4) +
+  theme_bw() +
+  theme(legend.position="bottom") +
+  xlab("School Year")
+  
+```
+
+
+
+---
+
+# Exploration
+
+- Data exploration is a meandering walk through the data 
+
+- Data driven, have question(s) but no explicit hypotheses
+
+- results critically assessed against implicit assumptions
+
+- detect both problems in the data and learn insights on the way
+
+---
+class: inverse, middle, center
+# Basics of  R
+
+---
+
+## R is an Overgrown Calculator
+
+- Follow along (copy & paste the code into the console):
+```{r, eval = FALSE}
+if (!require(curl)) install.packages("curl")
+curl::curl_download(
+  "https://raw.githubusercontent.com/heike/greenlee/master/01-Introduction-to-R/code/2-basics.R",
+  "2-basics.R"
+)
+file.edit("2-basics.R")
+```
+
+---
+
+## R is an Overgrown Calculator
+
+
+```{r}
+# Addition and Subtraction
+2 + 5 - 1
+
+# Multiplication
+109*23452
+
+# Division
+3/7
+```
+
+---
+
+## More Calculator Operations
+
+```{r}
+# Integer division
+7 %/% 2
+
+# Modulo operator (Remainder)
+7 %% 2
+
+# Powers
+1.5^3
+```
+
+---
+
+## Math Functions
+
+- Exponentiation 
+    - `exp(x)`
+
+- Logarithms
+    - `log(x)`
+    - `log(x, base = 10)`
+
+- Trigonometric functions
+    - `sin(x)`
+    - `asin(x)`
+    - `cos(x)`
+    - `tan(x)`
+    
+---
+
+## Creating Objects
+
+We can create an object using the assignment operator `<-`
+
+```{r}
+x <- 5
+y <- 21
+```
+
+We can then perform any functions on these objects:
+
+```{r}
+log(x)
+y^2
+```
+
+---
+
+## Rules for Variable Creation
+
+- Variable names can't start with a number
+
+- Variables in R are case-sensitive
+
+- Some common letters are used internally by R and should be avoided as variable names (c, q, t, C, D, F, T, I)
+
+- There are reserved words that R won't let you use for variable names. (`for`, `in`, `while`, `if`, `else`, `repeat`, `break`, `next`)
+
+- R will let you use the name of a predefined function __without any warning__.  <br>
+
+__Pro-tip:__ before introducing a new object, type it in the console to check that it is not yet taken
+
+---
+
+## Vectors
+
+A variable usually consists of more than a single value. We can create a **vector** using the `c` (combine) function:
+
+```{r}
+y <- c(1, 5, 3, 2)
+```
+
+Operations will then be done element-wise:
+
+```{r}
+y / 2
+```
+
+---
+
+## Getting Help
+
+We will talk MUCH more about vectors in a bit, but for now, let's talk about a couple ways to get help. The primary function to use is the `help` function. Just pass in the name of the function you need help with:
+
+```{r, eval=FALSE}
+help(head)
+```
+
+The `?` function also works:
+
+```{r, eval=FALSE}
+?head
+```
+
+Googling for help is a bit hard. Searches of the form  R + CRAN + <your query> usually get good results
+
+---
+
+## R Reference Card
+
+We will pass you out a copy, but you can download the reference card from:
+
+http://cran.r-project.org/doc/contrib/Short-refcard.pdf
+
+Having this open or printed off and near you while working is helpful.
+
+---
+class: inverse
+## Your Turn 
+
+Using the R Reference Card at https://cran.r-project.org/doc/contrib/Short-refcard.pdf
+ (and the Help pages, if needed), do the following:
+
+1. Find out how many rows and columns the `iris` data set has.  Figure out at least 2 ways to do this. <br>
+Hint: "Variable Information" section on the first page of the reference card!
+
+2. Use the `rep` function to construct the following vector:  1 1 2 2 3 3 4 4 5 5 <br>
+Hint: "Data Creation" section of the reference card
+
+3. Use `rep` to construct this vector: 1 2 3 4 5 1 2 3 4 5 1 2 3 4 5
+
+
+---
+
+# Data Frames Introduction
+
+- `schools` is a data frame.
+
+- Data frames hold data sets
+
+- Columns can have different types - like an Excel spreadsheet
+
+- Each column in a data frame is a vector - so each column needs to have values that are all the same type.
+
+
+```{r}
+str(schools)
+```
+
+---
+
+## Examining Objects
+
+- `head(x)` - View top 6 rows of a data frame
+
+- `tail(x)` - View bottom 6 rows of a data frame
+
+- `summary(x)` - Summary statistics   
+
+- `str(x)` - View structure of object  
+
+- `dim(x)` - View dimensions of object 
+
+- `length(x)` - Returns the length of a vector
+
+---
+
+## Examining Objects Example
+
+We can examine the first two values of an object by passing the `n` parameter to the `head` function:
+
+```{r}
+head(iris, n = 2)
+```
+
+What's its structure?
+
+```{r}
+str(iris)
+```
+
+---
+class: inverse
+## Your Turn 
+
+`mtcars` is a data frame in base R
+
+0. Read the help file for `mtcars`
+
+1. View the top 8 rows of `mtcars` data
+
+2. What type of object is the `mtcars` data set?
+
+3. How many rows are in the `mtcars` data set? (try finding this using dim or indexing + length)
+
+4. Summarize the values in each column of the `mtcars` data set
+
+---
+class: inverse, middle, center
+# Looking at data with plots
+
+---
+
+## ggplot2 in a nutshell
+
+- Wildly popular package for statistical graphics: by now about 500k monthly downloads from CRAN ( more than 10k times per day)
+
+```{r, echo=FALSE, cache=TRUE, message = FALSE, out.height = 450}
+library("dlstats")
+
+dframe <- cran_stats("ggplot2")
+ggplot(data = dframe[-nrow(dframe),], aes(x = end, y = downloads/1000)) + 
+  geom_point(size = 3) + geom_smooth(se=FALSE) +
+  ylab("Number of monthly downloads (in 1000s)") + xlab("Date") +
+  ggtitle("Number of monthly downloads of ggplot2") +
+  theme_bw()
+```
+
+---
+
+## More on ggplot2
+
+- Developed by Hadley Wickham (An ISU Alumni)
+
+- Designed to adhere to good graphical practices
+
+- Supports a wide variety plot types
+
+- Constructs plots using the concept of layers
+
+- RStudio [reference sheet for ggplot2](https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf)\medskip
+
+- http://ggplot2.org/book/ or Hadley's book *ggplot2: Elegant Graphics for Data Analysis* for reference material
+
+---
+
+## Mappings and Layers
+
+ggplot2 has mappings `aes` to connect variables to elements in a plot
+
+layers are added in `geom` to show points, bars, lines, ...
+
+```{r, out.height = 400}
+ggplot(data = mtcars, aes(x = wt, y = mpg)) +
+  geom_point()
+```
+---
+
+## Mappings and Layers
+
+```{r, out.height = 400, message = FALSE}
+ggplot(data = mtcars, aes(x = wt, y = mpg)) +
+  geom_point() +
+  geom_smooth()
+```
+---
+
+## Mappings and Layers
+
+```{r, out.height = 400, message = FALSE}
+mtcars$name = row.names(mtcars)
+ggplot(data = mtcars, aes(x = wt, y = mpg)) +
+  geom_point() +
+  geom_smooth() +
+  geom_text(aes(label = name), size = 3)
+```
+
+---
+
+## Aesthetics
+
+Variables can be mapped to aesthetics of elements in a plot 
+
+Points have `size`, `shape`, `colour`
+
+Rectangles have frame `colour` and `fill` colour
+
+```{r}
+ggplot(data = mtcars, aes(x = wt, y = mpg, colour = factor(cyl))) +
+  geom_point()
+```
+
+---
+class: inverse
+## Your Turn
+
+For the `iris` data set
+
+- draw a scatterplot of Petal width by Petal length (use `names` to find out exact names of the variables)
+
+- colour points in the scatterplot by Species. 
+
+- additionally, use a different shape for each of the Species of iris.
+
+- draw  density curves of Sepal width for each of the Species (in a new plot), colour by Species
+
+---
+class:inverse
+## Your Turn
+
+- install package `alr3` from CRAN using the command `install.packages("alr3")`
+
+- make the package active with the command `library(alr3)`
+
+- the alr3 package contains the data frame `banknote` - read the help
+
+- can we detect a difference in measurements between genuine and counterfeit banknotes? Draw some density plots!
+
+
+---
+
+# There's a lot more
+
+- Stats department offers hands-on workshops (almost annually, likely the week before Fall semester starts)
+
+- RStudio offers a lot of online tutorials, also conferences with workshops
+
+- There's an R-Ladies group in Ames - sign up at https://www.meetup.com/rladies-ames/
+ (Tidy Tuesday next Tuesday over lunch)

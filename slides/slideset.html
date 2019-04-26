@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Intro to R - Hello WoRld</title>
+    <meta charset="utf-8">
+    <meta name="author" content="Heike Hofmann" />
+    <meta name="date" content="2019-04-26" />
+    <link href="libs/remark-css-0.0.1/default.css" rel="stylesheet" />
+    <link href="libs/remark-css-0.0.1/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Intro to R - Hello WoRld
+### Heike Hofmann
+### 2019-04-26
+
+---
+
+class: inverse, center, middle
+
+
+# R, RStudio, and RMarkdown
+
+---
+
+# Outline
+
+- What is R
+
+- Example Data Exploration
+
+- Basic R functionality
+
+- Some plots with ggplot2
+
+---
+
+## R is ...
+
+* __Free__ to use
+
+* __Extensible__: Over 14,000 user contributed add-on packages currently on CRAN!
+
+* __Powerful__: With the right tools, get more work done, faster.
+
+* __Flexible__: Not a question of _can_, but _how_.
+
+* __Frustrating__: Flexibility comes at a cost (easy to shoot yourself in the foot!).
+
+
+```r
+pkgs &lt;- available.packages(repos='http://cran.us.r-project.org')
+nrow(pkgs)
+```
+
+```
+## [1] 14062
+```
+
+---
+
+## R does ...
+
+* __Graphics, statistics, machine learning, etc.__
+
+* __Data acquisition, munging, management__
+
+* __Literate programming (dynamic reports)__
+
+* __Web applications__
+
+We will touch on some of these aspects.
+Slides and material are available at
+ http://heike.github.io/greenlee
+
+---
+class: middle, center
+#  http://heike.github.io/greenlee
+
+---
+
+## Installing R
+
+- Go to [http://www.r-project.org/](http://www.r-project.org/)
+
+- Click the CRAN link on the left, and pick a download site (0-Cloud is a good choice)
+
+- Choose link based on your OS
+
+- On Windows, choose the "base" subdirectory to install R.
+
+- On OS X, choose the .pkg file to install R.
+
+---
+
+## Installing RStudio
+
+- Browse to [https://www.rstudio.com/](https://www.rstudio.com/)
+
+- Mouse over Products and click RStudio
+
+- Choose RStudio Desktop
+
+- Click Download RStudio Desktop
+
+- Choose the installer appropriate for your platform
+
+
+---
+class: inverse
+## RStudio is ... 
+
+[From Julie Lowndes](http://jules32.github.io/resources/RStudio_intro/):  
+
+&lt;blockquote&gt;
+&lt;p style="color:white"&gt;&lt;b&gt;If R were an airplane, RStudio would be the airport,&lt;/b&gt;&lt;br&gt;&lt;br&gt;providing many, many supporting services that make it easier for you, the pilot, to take off and go to awesome places. Sure, you can fly an airplane without an airport, but having those runways and supporting infrastructure is a game-changer.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+---
+
+## The RStudio IDE
+
+&lt;img class="cover" src="images/rstudio-panes.png" alt=""&gt;
+
+---
+
+## The RStudio IDE
+
+
+1. **Source editor:** Docking station for multiple files, Useful shortcuts ("Knit"), Highlighting/Tab-completion, Code-checking (R, HTML, JS), Debugging features  
+
+2. **Console window:** Highlighting/Tab-completion, Search recent commands
+
+3. **Environment pane:** Tools for package development, git, etc
+
+4. **Other tabs/panes:** Graphics, R documentation, File system navigation/access
+
+&lt;br&gt;
+&lt;br&gt;
+*Protip:* save yourself the headaches figuring out file paths and instead work in an RStudio R project (popup menu at the top left)
+
+---
+
+## Markdown
+
+- Markdown is a particular type of **markup** language.
+
+- Markup languages are designed to **produce documents from plain text**.
+
+- Some of you might have heard of is **LaTeX**. This is another (less human friendly) markup language for creating pdf documents.
+
+- LaTeX gives you much greater control, but it is restricted to pdf and has a much greater learning curve.
+
+- **Markdown** is becoming a **standard**. Many websites will generate HTML from Markdown (e.g. GitHub, Stack Overflow, reddit, ...).
+
+---
+
+## Markdown is easy
+
+
+```r
+ *italic*
+ **bold**
+
+ # Header 1
+ ## Header 2
+ ### Header 3
+
+ - List item 1
+ - List item 2
+    - item 2a
+    - item 2b
+
+ 1. Numbered list item 1
+ 2. Numbered list item 2
+    - item 2a
+    - item 2b
+```
+
+
+Have a look at RStudio's [RMarkdown cheat sheet](https://www.rstudio.com/resources/cheatsheets/)
+
+---
+
+## What is RMarkdown?
+
+- ... an authoring format that enables easy creation of dynamic documents, presentations, and reports from R. 
+
+- it combines the core syntax of markdown with embedded R code chunks that are run so their output can be included in the final document.
+
+- R Markdown documents are fully reproducible (they are automatically regenerated whenever underlying R code or data changes).
+
+---
+
+
+&lt;img class="cover" src="images/rmarkdown.png" alt=""&gt;
+
+---
+
+## Why R Markdown?
+
+- **It's simple.** Focus on writing, rather than debugging silly errors.
+
+- **It's flexible.** Markdown was created to simplify writing HTML, but thanks to pandoc, Markdown converts to many different formats!
+
+- **It's dynamic.** Find a critical error? Get a new dataset? Regenerate your report without copy/paste hell!
+
+- **Encourages transparency.** Collaborators (including your future self) will thank you for integrating your analysis &amp; report.
+
+- **Enables interactivity/reactivity.** Allow your audience to explore the analysis (rather than passively read it).
+
+---
+
+&lt;img class="cover" src="images/hello-rmarkdown.png" alt=""&gt;
+
+---
+class: inverse
+## Your Turn (5 min) 
+
+
+1. Open RStudio, create a new project.
+
+2. Create a new RMarkdown file and knit it.
+
+3. Navigate to the RMarkdown cheat sheet and download a copy (Google for the link!)
+
+3. Make changes to the markdown formatting and knit again.
+
+4. Export output to different files. Can you create a Word document?
+
+5. If you feel adventurous, change some of the R code and knit again.
+
+---
+class: inverse, middle, center
+# An Example
+
+---
+
+# An Example 
+
+- Kick things off by looking at a real data set in R
+
+- Goal: get the flavor of using R for data management and exploration
+
+- Don't worry about understanding any of the code 
+
+- We will come back to see how things work in more detail
+
+---
+
+## The question: what is the state of math and reading proficiency in Iowa?
+
+- identifying a data source: Iowa Data Portal https://data.iowa.gov/
+
+- [Math and Reading Proficiency by School Year](https://data.iowa.gov/Education/Math-And-Reading-Proficiency-in-Iowa-by-School-Yea/f3h8-mnxi)
+
+- [Map of School Districts](https://data.iowa.gov/Education/2016-2017-Iowa-Public-School-District-Boundaries/e6xn-sdvr)
+
+---
+
+## Getting the data into R
+
+
+```r
+schools &lt;- read.csv("../data/iowa-modified.csv")
+dim(schools)
+```
+
+```
+## [1] 68956    16
+```
+
+```r
+head(schools)
+```
+
+```
+##   School.Year   Topic Grade District District.Name
+## 1        2015 Reading     8       18   Adair-Casey
+## 2        2015 Reading     3     3168   IKM-Manning
+## 3        2016 Reading     4     4572        Murray
+## 4        2015 Reading     7     3042        Hudson
+## 5        2015 Reading    11       18   Adair-Casey
+## 6        2015 Reading     4     3168   IKM-Manning
+##   Proficient Total Perc.Proficient Proficient.Category
+## 1         13    22            59.1          50.1 - 60%
+## 2         39    45            86.7          80.1 - 90%
+## 3         15    23            65.2          60.1 - 70%
+## 4         38    47            80.9          80.1 - 90%
+## 5         18    25            72.0          70.1 - 80%
+## 6         34    40            85.0          80.1 - 90%
+##   Iowa.ZIP.Code.Tabulation.Areas Iowa.Watersheds..HUC.10.
+## 1                             NA                       NA
+## 2                             NA                       NA
+## 3                             NA                       NA
+## 4                             NA                       NA
+## 5                             NA                       NA
+## 6                             NA                       NA
+##   Iowa.Watershed.Sub.Basins..HUC.08. US.Counties
+## 1                                 NA          NA
+## 2                                 NA          NA
+## 3                                 NA          NA
+## 4                                 NA          NA
+## 5                                 NA          NA
+## 6                                 NA          NA
+##         dname latitude longitude
+## 1 Adair-Casey 41.52157 -94.58585
+## 2 IKM-Manning 41.88971 -95.22876
+## 3      Murray 41.03988 -93.95365
+## 4      Hudson 42.40183 -92.45396
+## 5 Adair-Casey 41.52157 -94.58585
+## 6 IKM-Manning 41.88971 -95.22876
+```
+
+---
+
+## Proficiency levels in Ames
+
+![](slideset_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
+--
+
+Are students in some years better than others?
+
+---
+
+# Class of ...
+
+![](slideset_files/figure-html/unnamed-chunk-5-1.png)&lt;!-- --&gt;
+
+--
+
+How do proficiency levels and their trends in Ames compare to the other school districts in Iowa?
+
+---
+
+
+# Iowa School Districts
+
+![](slideset_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
+
+---
+
+# Ames vs Iowa 2017
+
+![](slideset_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
+
+---
+
+# Zero Proficiency?
+
+
+```r
+schools %&gt;% 
+  filter(School.Year == 2017) %&gt;%
+  filter(Perc.Proficient == 0) %&gt;%
+  select(dname, Proficient, Total, Grade)
+```
+
+```
+##                       dname Proficient Total Grade
+## 1                   Harmony          0     0     7
+## 2        Northeast Hamilton          0     0    11
+## 3   Southeast Webster Grand          0     0    11
+## 4               Adair-Casey          0     0    11
+## 5     Albert City-Truesdale          0     0    11
+## 6                   LuVerne          0     0     7
+## 7        Northeast Hamilton          0     0     7
+## 8            Prairie Valley          0     0     8
+## 9                 Stratford          0     0    11
+## 10                   United          0     0     8
+## 11             Remsen-Union          0     0    11
+## 12                  LuVerne          0     0     8
+## 13              North Union          0     0     6
+## 14              North Union          0     0     8
+## 15                  Bennett          0     0     7
+## 16                  Aurelia          0     0    11
+## 17                  Harmony          0     0    11
+## 18                  Corning          0     0     7
+## 19           Odebolt-Arthur          0     0    11
+## 20                  Gilbert          0     0     3
+## 21            North Kossuth          0     0    11
+## 22                   United          0     0     7
+## 23         North Winneshiek          0     0    11
+## 24           Prairie Valley          0     0     7
+## 25                     Alta          0     0     7
+## 26   Battle Creek-Ida Grove          0     0     8
+## 27    Albert City-Truesdale          0     0     8
+## 28                Stratford          0     0     8
+## 29              Twin Rivers          0     0    11
+## 30                Stratford          0     0     7
+## 31   Battle Creek-Ida Grove          0     0     6
+## 32  Marcus-Meriden-Cleghorn          0     0     8
+## 33    Gilmore City-Bradgate          0     0     7
+## 34           Guthrie Center          0     0     7
+## 35                   Andrew          0     0    11
+## 36         North Winneshiek          0     0    11
+## 37                     Olin          0     0     7
+## 38                  Corning          0     0     6
+## 39   Battle Creek-Ida Grove          0     0     8
+## 40       Northeast Hamilton          0     0    11
+## 41        Hubbard-Radcliffe          0     0    11
+## 42                  LuVerne          0     0     7
+## 43           Guthrie Center          0     0     8
+## 44                   United          0     0     8
+## 45    Gilmore City-Bradgate          0     0    11
+## 46                    Alden          0     0    11
+## 47   Battle Creek-Ida Grove          0     0     6
+## 48               Iowa Falls          0     0     6
+## 49                    Alden          0     0     8
+## 50    Eldora-New Providence          0     0     8
+## 51           Odebolt-Arthur          0     0    11
+## 52    Albert City-Truesdale          0     0     7
+## 53              Twin Rivers          0     0     6
+## 54       Northeast Hamilton          0     0     8
+## 55       Northeast Hamilton          0     0     7
+## 56           Guthrie Center          0     0     7
+## 57                  Corning          0     0     8
+## 58    Gilmore City-Bradgate          0     0    11
+## 59                  Aurelia          0     0    11
+## 60  Marcus-Meriden-Cleghorn          0     0     8
+## 61                  Delwood          0     0     7
+## 62                  Harmony          0     0     7
+## 63                     Olin          0     0     8
+## 64                  Delwood          0     0     8
+## 65    Eldora-New Providence          0     0     6
+## 66                     Olin          0     0    11
+## 67              Twin Rivers          0     0     8
+## 68                  Bennett          0     0     7
+## 69                    Alden          0     0     8
+## 70              North Union          0     0     8
+## 71                     Alta          0     0     6
+## 72  Marcus-Meriden-Cleghorn          0     0     6
+## 73    Albert City-Truesdale          0     0    11
+## 74  Southeast Webster Grand          0     0    11
+## 75            North Fayette          0     0     8
+## 76                  Harmony          0     0     8
+## 77                   United          0     0     7
+## 78                  LuVerne          0     0    11
+## 79    Gilmore City-Bradgate          0     0     8
+## 80    Eldora-New Providence          0     0     6
+## 81    Gilmore City-Bradgate          0     0     7
+## 82              Twin Rivers          0     0    11
+## 83                   United          0     0    11
+## 84                     Olin          0     0     8
+## 85               Iowa Falls          0     0     6
+## 86                  Delwood          0     0    11
+## 87           Prairie Valley          0     0     7
+## 88                     Olin          0     0    11
+## 89                  LuVerne          0     0    11
+## 90                  Bennett          0     0    11
+## 91              Twin Rivers          0     0     7
+## 92           Prairie Valley          0     0     5
+## 93                  Bennett          0     0     8
+## 94            North Fayette          0     0     8
+## 95                    Alden          0     0     7
+## 96    Gilmore City-Bradgate          0     0     8
+## 97       Schaller-Crestland          0     0    11
+## 98                     Alta          0     0     7
+## 99              Twin Rivers          0     0     7
+## 100  Battle Creek-Ida Grove          0     0     7
+## 101                  Andrew          0     0    11
+## 102             North Union          0     0     7
+## 103                    Alta          0     0     5
+## 104   Albert City-Truesdale          0     0     7
+## 105                 Corning          0     0     7
+## 106                  Valley          0     0    11
+## 107 Marcus-Meriden-Cleghorn          0     0     7
+## 108                   Alden          0     0    11
+## 109             North Union          0     0     7
+## 110          Prairie Valley          0     0     5
+## 111                    Alta          0     0     8
+## 112                 Corning          0     0     8
+## 113      Northeast Hamilton          0     0     8
+## 114               Stratford          0     0     8
+## 115                 LuVerne          0     0     8
+## 116   Eldora-New Providence          0     0     8
+## 117           North Fayette          0     0     7
+## 118            Remsen-Union          0     0    11
+## 119                  Valley          0     0    11
+## 120             Twin Rivers          0     0     6
+## 121                    Alta          0     0     8
+## 122               Stratford          0     0     7
+## 123 Marcus-Meriden-Cleghorn          0     0     6
+## 124             North Union          0     0     6
+## 125                 Delwood          0     0    11
+## 126               Stratford          0     0    11
+## 127           North Kossuth          0     0    11
+## 128          Galva-Holstein          0     0     8
+## 129          Galva-Holstein          0     0     8
+## 130                 Corning          0     0     6
+## 131          Galva-Holstein          0     0     6
+## 132          Prairie Valley          0     0     6
+## 133   Eldora-New Providence          0     0     7
+## 134                 Harmony          0     0     8
+## 135          Prairie Valley          0     0     6
+## 136           North Fayette          0     0     7
+## 137                 Gilbert          0     0     3
+## 138             Adair-Casey          0     0    11
+## 139   Eldora-New Providence          0     0     7
+## 140 Marcus-Meriden-Cleghorn          0     0     5
+## 141                   Alden          0     0     7
+## 142                 Delwood          0     0     8
+## 143             Twin Rivers          0     0     8
+## 144                    Olin          0     0     7
+## 145       Hubbard-Radcliffe          0     0    11
+## 146                    Alta          0     0     5
+## 147               Schleswig          0     0    11
+## 148                 Harmony          0     0    11
+## 149 Marcus-Meriden-Cleghorn          0     0     5
+## 150  Battle Creek-Ida Grove          0     0     7
+## 151 Marcus-Meriden-Cleghorn          0     0     7
+## 152                 Bennett          0     0    11
+## 153      Schaller-Crestland          0     0    11
+## 154   Albert City-Truesdale          0     0     8
+## 155               Schleswig          0     0    11
+## 156          Guthrie Center          0     0     8
+## 157          Prairie Valley          0     0     8
+## 158                  United          0     0    11
+## 159                 Bennett          0     0     8
+## 160                    Alta          0     0     6
+## 161                 Delwood          0     0     7
+## 162          Galva-Holstein          0     0     6
+```
+
+---
+
+# Ames vs Iowa 2017 in School districts with students
+
+![](slideset_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
+
+
+---
+
+# School Districts over time
+
+
+![](slideset_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
+
+--
+
+What's going on with School Year 2015?
+
+---
+
+# School Year 2015 in Ames
+
+
+```r
+schools %&gt;% 
+  filter(School.Year == 2015, Grade == 3, dname == "Ames")
+```
+
+```
+##   School.Year   Topic Grade District District.Name
+## 1        2015 Reading     3      225          Ames
+## 2        2015    Math     3      225          Ames
+## 3        2015 Reading     3      225          Ames
+## 4        2015    Math     3      225          Ames
+##   Proficient Total Perc.Proficient Proficient.Category
+## 1        228   255            89.4          80.1 - 90%
+## 2        235   254            92.5         90.1 - 100%
+## 3        228   255            89.4          80.1 - 90%
+## 4        235   254            92.5         90.1 - 100%
+##   Iowa.ZIP.Code.Tabulation.Areas Iowa.Watersheds..HUC.10.
+## 1                             NA                       NA
+## 2                             NA                       NA
+## 3                             NA                       NA
+## 4                             NA                       NA
+##   Iowa.Watershed.Sub.Basins..HUC.08. US.Counties dname
+## 1                                 NA          NA  Ames
+## 2                                 NA          NA  Ames
+## 3                                 NA          NA  Ames
+## 4                                 NA          NA  Ames
+##   latitude longitude classof
+## 1 42.01792 -93.64855    2024
+## 2 42.01792 -93.64855    2024
+## 3 42.01792 -93.64855    2024
+## 4 42.01792 -93.64855    2024
+```
+
+
+
+```r
+schools &lt;- unique(schools)
+```
+
+---
+
+# School Districts over time (no duplicates)
+
+
+![](slideset_files/figure-html/unnamed-chunk-13-1.png)&lt;!-- --&gt;
+
+
+---
+
+# Number of students over time
+
+
+![](slideset_files/figure-html/unnamed-chunk-14-1.png)&lt;!-- --&gt;
+
+
+---
+
+# Stories of Disappearances and Mergers
+
+![](slideset_files/figure-html/unnamed-chunk-15-1.png)&lt;!-- --&gt;
+
+
+
+---
+
+# Exploration
+
+- Data exploration is a meandering walk through the data 
+
+- Data driven, have question(s) but no explicit hypotheses
+
+- results critically assessed against implicit assumptions
+
+- detect both problems in the data and learn insights on the way
+
+---
+class: inverse, middle, center
+# Basics of  R
+
+---
+
+## R is an Overgrown Calculator
+
+- Follow along (copy &amp; paste the code into the console):
+
+```r
+if (!require(curl)) install.packages("curl")
+curl::curl_download(
+  "https://raw.githubusercontent.com/heike/greenlee/master/01-Introduction-to-R/code/2-basics.R",
+  "2-basics.R"
+)
+file.edit("2-basics.R")
+```
+
+---
+
+## R is an Overgrown Calculator
+
+
+
+```r
+# Addition and Subtraction
+2 + 5 - 1
+```
+
+```
+## [1] 6
+```
+
+```r
+# Multiplication
+109*23452
+```
+
+```
+## [1] 2556268
+```
+
+```r
+# Division
+3/7
+```
+
+```
+## [1] 0.4285714
+```
+
+---
+
+## More Calculator Operations
+
+
+```r
+# Integer division
+7 %/% 2
+```
+
+```
+## [1] 3
+```
+
+```r
+# Modulo operator (Remainder)
+7 %% 2
+```
+
+```
+## [1] 1
+```
+
+```r
+# Powers
+1.5^3
+```
+
+```
+## [1] 3.375
+```
+
+---
+
+## Math Functions
+
+- Exponentiation 
+    - `exp(x)`
+
+- Logarithms
+    - `log(x)`
+    - `log(x, base = 10)`
+
+- Trigonometric functions
+    - `sin(x)`
+    - `asin(x)`
+    - `cos(x)`
+    - `tan(x)`
+    
+---
+
+## Creating Objects
+
+We can create an object using the assignment operator `&lt;-`
+
+
+```r
+x &lt;- 5
+y &lt;- 21
+```
+
+We can then perform any functions on these objects:
+
+
+```r
+log(x)
+```
+
+```
+## [1] 1.609438
+```
+
+```r
+y^2
+```
+
+```
+## [1] 441
+```
+
+---
+
+## Rules for Variable Creation
+
+- Variable names can't start with a number
+
+- Variables in R are case-sensitive
+
+- Some common letters are used internally by R and should be avoided as variable names (c, q, t, C, D, F, T, I)
+
+- There are reserved words that R won't let you use for variable names. (`for`, `in`, `while`, `if`, `else`, `repeat`, `break`, `next`)
+
+- R will let you use the name of a predefined function __without any warning__.  &lt;br&gt;
+
+__Pro-tip:__ before introducing a new object, type it in the console to check that it is not yet taken
+
+---
+
+## Vectors
+
+A variable usually consists of more than a single value. We can create a **vector** using the `c` (combine) function:
+
+
+```r
+y &lt;- c(1, 5, 3, 2)
+```
+
+Operations will then be done element-wise:
+
+
+```r
+y / 2
+```
+
+```
+## [1] 0.5 2.5 1.5 1.0
+```
+
+---
+
+## Getting Help
+
+We will talk MUCH more about vectors in a bit, but for now, let's talk about a couple ways to get help. The primary function to use is the `help` function. Just pass in the name of the function you need help with:
+
+
+```r
+help(head)
+```
+
+The `?` function also works:
+
+
+```r
+?head
+```
+
+Googling for help is a bit hard. Searches of the form  R + CRAN + &lt;your query&gt; usually get good results
+
+---
+
+## R Reference Card
+
+We will pass you out a copy, but you can download the reference card from:
+
+http://cran.r-project.org/doc/contrib/Short-refcard.pdf
+
+Having this open or printed off and near you while working is helpful.
+
+---
+class: inverse
+## Your Turn 
+
+Using the R Reference Card at https://cran.r-project.org/doc/contrib/Short-refcard.pdf
+ (and the Help pages, if needed), do the following:
+
+1. Find out how many rows and columns the `iris` data set has.  Figure out at least 2 ways to do this. &lt;br&gt;
+Hint: "Variable Information" section on the first page of the reference card!
+
+2. Use the `rep` function to construct the following vector:  1 1 2 2 3 3 4 4 5 5 &lt;br&gt;
+Hint: "Data Creation" section of the reference card
+
+3. Use `rep` to construct this vector: 1 2 3 4 5 1 2 3 4 5 1 2 3 4 5
+
+
+---
+
+# Data Frames Introduction
+
+- `schools` is a data frame.
+
+- Data frames hold data sets
+
+- Columns can have different types - like an Excel spreadsheet
+
+- Each column in a data frame is a vector - so each column needs to have values that are all the same type.
+
+
+
+```r
+str(schools)
+```
+
+```
+## 'data.frame':	64224 obs. of  17 variables:
+##  $ School.Year                       : int  2015 2015 2016 2015 2015 2015 2015 2015 2016 2015 ...
+##  $ Topic                             : Factor w/ 2 levels "Math","Reading": 2 2 2 2 2 2 2 2 2 2 ...
+##  $ Grade                             : int  8 3 4 7 11 4 5 3 3 4 ...
+##  $ District                          : int  18 3168 4572 3042 18 3168 720 27 4527 27 ...
+##  $ District.Name                     : Factor w/ 730 levels "A-H-S-T","Adair-Casey",..: 2 316 432 311 2 316 70 4 426 4 ...
+##  $ Proficient                        : int  13 39 15 38 18 34 98 107 12 106 ...
+##  $ Total                             : int  22 45 23 47 25 40 115 125 16 116 ...
+##  $ Perc.Proficient                   : num  59.1 86.7 65.2 80.9 72 85 85.2 85.6 75 91.4 ...
+##  $ Proficient.Category               : Factor w/ 11 levels "10.1 - 20%","10% or Less",..: 6 9 7 9 8 9 9 9 8 10 ...
+##  $ Iowa.ZIP.Code.Tabulation.Areas    : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ Iowa.Watersheds..HUC.10.          : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ Iowa.Watershed.Sub.Basins..HUC.08.: int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ US.Counties                       : int  NA NA NA NA NA NA NA NA NA NA ...
+##  $ dname                             : Factor w/ 394 levels "A-H-S-T","Adair-Casey",..: 2 173 233 170 2 173 39 3 230 3 ...
+##  $ latitude                          : num  41.5 41.9 41 42.4 41.5 ...
+##  $ longitude                         : num  -94.6 -95.2 -94 -92.5 -94.6 ...
+##  $ classof                           : num  2019 2024 2024 2020 2016 ...
+```
+
+---
+
+## Examining Objects
+
+- `head(x)` - View top 6 rows of a data frame
+
+- `tail(x)` - View bottom 6 rows of a data frame
+
+- `summary(x)` - Summary statistics   
+
+- `str(x)` - View structure of object  
+
+- `dim(x)` - View dimensions of object 
+
+- `length(x)` - Returns the length of a vector
+
+---
+
+## Examining Objects Example
+
+We can examine the first two values of an object by passing the `n` parameter to the `head` function:
+
+
+```r
+head(iris, n = 2)
+```
+
+```
+##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+## 1          5.1         3.5          1.4         0.2  setosa
+## 2          4.9         3.0          1.4         0.2  setosa
+```
+
+What's its structure?
+
+
+```r
+str(iris)
+```
+
+```
+## 'data.frame':	150 obs. of  5 variables:
+##  $ Sepal.Length: num  5.1 4.9 4.7 4.6 5 5.4 4.6 5 4.4 4.9 ...
+##  $ Sepal.Width : num  3.5 3 3.2 3.1 3.6 3.9 3.4 3.4 2.9 3.1 ...
+##  $ Petal.Length: num  1.4 1.4 1.3 1.5 1.4 1.7 1.4 1.5 1.4 1.5 ...
+##  $ Petal.Width : num  0.2 0.2 0.2 0.2 0.2 0.4 0.3 0.2 0.2 0.1 ...
+##  $ Species     : Factor w/ 3 levels "setosa","versicolor",..: 1 1 1 1 1 1 1 1 1 1 ...
+```
+
+---
+class: inverse
+## Your Turn 
+
+`mtcars` is a data frame in base R
+
+0. Read the help file for `mtcars`
+
+1. View the top 8 rows of `mtcars` data
+
+2. What type of object is the `mtcars` data set?
+
+3. How many rows are in the `mtcars` data set? (try finding this using dim or indexing + length)
+
+4. Summarize the values in each column of the `mtcars` data set
+
+---
+class: inverse, middle, center
+# Looking at data with plots
+
+---
+
+## ggplot2 in a nutshell
+
+- Wildly popular package for statistical graphics: by now about 500k monthly downloads from CRAN ( more than 10k times per day)
+
+&lt;img src="slideset_files/figure-html/unnamed-chunk-28-1.png" height="300" /&gt;
+
+---
+
+## More on ggplot2
+
+- Developed by Hadley Wickham (An ISU Alumni)
+
+- Designed to adhere to good graphical practices
+
+- Supports a wide variety plot types
+
+- Constructs plots using the concept of layers
+
+- RStudio [reference sheet for ggplot2](https://www.rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf)\medskip
+
+- http://ggplot2.org/book/ or Hadley's book *ggplot2: Elegant Graphics for Data Analysis* for reference material
+
+---
+
+## Mappings and Layers
+
+ggplot2 has mappings `aes` to connect variables to elements in a plot
+
+layers are added in `geom` to show points, bars, lines, ...
+
+
+```r
+ggplot(data = mtcars, aes(x = wt, y = mpg)) +
+  geom_point()
+```
+
+&lt;img src="slideset_files/figure-html/unnamed-chunk-29-1.png" height="300" /&gt;
+---
+
+## Mappings and Layers
+
+
+```r
+ggplot(data = mtcars, aes(x = wt, y = mpg)) +
+  geom_point() +
+  geom_smooth()
+```
+
+&lt;img src="slideset_files/figure-html/unnamed-chunk-30-1.png" height="300" /&gt;
+---
+
+## Mappings and Layers
+
+
+```r
+mtcars$name = row.names(mtcars)
+ggplot(data = mtcars, aes(x = wt, y = mpg)) +
+  geom_point() +
+  geom_smooth() +
+  geom_text(aes(label = name))
+```
+
+&lt;img src="slideset_files/figure-html/unnamed-chunk-31-1.png" height="300" /&gt;
+
+---
+
+## Aesthetics
+
+Variables can be mapped to aesthetics of elements in a plot 
+
+Points have `size`, `shape`, `colour`
+
+Rectangles have frame `colour` and `fill` colour
+
+
+```r
+ggplot(data = mtcars, aes(x = wt, y = mpg, colour = factor(cyl))) +
+  geom_point()
+```
+
+![](slideset_files/figure-html/unnamed-chunk-32-1.png)&lt;!-- --&gt;
+
+---
+class: inverse
+## Your Turn
+
+For the `iris` data set
+
+- draw a scatterplot of Petal width by Petal length (use `names` to find out exact names of the variables)
+
+- colour points in the scatterplot by Species. 
+
+- additionally, use a different shape for each of the Species of iris.
+
+- draw  density curves of Sepal width for each of the Species (in a new plot), colour by Species
+
+---
+class:inverse
+## Your Turn
+
+- install package `alr3` from CRAN using the command `install.packages("alr3")`
+
+- make the package active with the command `library(alr3)`
+
+- the alr3 package contains the data frame `banknote` - read the help
+
+- can we detect a difference in measurements between genuine and counterfeit banknotes? Draw some density plots!
+
+
+---
+
+# There's a lot more
+
+- Stats department offers hands-on workshops (almost annually, likely the week before Fall semester starts)
+
+- RStudio offers a lot of online tutorials, also conferences with workshops
+
+- There's an R-Ladies group in Ames - sign up at https://www.meetup.com/rladies-ames/
+ (Tidy Tuesday next Tuesday over lunch)
+    </textarea>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function() {
+  var d = document, s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})();</script>
+
+<script>
+(function() {
+  var i, text, code, codes = document.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+})();
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
