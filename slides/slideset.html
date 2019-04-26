@@ -635,10 +635,9 @@ class: inverse, middle, center
 ```r
 if (!require(curl)) install.packages("curl")
 curl::curl_download(
-  "https://raw.githubusercontent.com/heike/greenlee/master/01-Introduction-to-R/code/2-basics.R",
-  "2-basics.R"
-)
-file.edit("2-basics.R")
+   "https://raw.githubusercontent.com/heike/greenlee/master/code/basics.R",
+   "basics.R")
+file.edit("basics.R")
 ```
 
 ---
@@ -984,7 +983,7 @@ ggplot(data = mtcars, aes(x = wt, y = mpg)) +
   geom_point()
 ```
 
-&lt;img src="slideset_files/figure-html/unnamed-chunk-29-1.png" height="400" /&gt;
+&lt;img src="slideset_files/figure-html/unnamed-chunk-29-1.png" height="350" /&gt;
 ---
 
 ## Mappings and Layers
@@ -996,7 +995,7 @@ ggplot(data = mtcars, aes(x = wt, y = mpg)) +
   geom_smooth()
 ```
 
-&lt;img src="slideset_files/figure-html/unnamed-chunk-30-1.png" height="400" /&gt;
+&lt;img src="slideset_files/figure-html/unnamed-chunk-30-1.png" height="350" /&gt;
 ---
 
 ## Mappings and Layers
@@ -1010,7 +1009,7 @@ ggplot(data = mtcars, aes(x = wt, y = mpg)) +
   geom_text(aes(label = name), size = 3)
 ```
 
-&lt;img src="slideset_files/figure-html/unnamed-chunk-31-1.png" height="400" /&gt;
+&lt;img src="slideset_files/figure-html/unnamed-chunk-31-1.png" height="350" /&gt;
 
 ---
 
@@ -1028,7 +1027,7 @@ ggplot(data = mtcars, aes(x = wt, y = mpg, colour = factor(cyl))) +
   geom_point()
 ```
 
-![](slideset_files/figure-html/unnamed-chunk-32-1.png)&lt;!-- --&gt;
+&lt;img src="slideset_files/figure-html/unnamed-chunk-32-1.png" height="350" /&gt;
 
 ---
 class: inverse

@@ -740,7 +740,7 @@ ggplot2 has mappings `aes` to connect variables to elements in a plot
 
 layers are added in `geom` to show points, bars, lines, ...
 
-```{r, out.height = 400}
+```{r, out.height = 350}
 ggplot(data = mtcars, aes(x = wt, y = mpg)) +
   geom_point()
 ```
@@ -748,7 +748,7 @@ ggplot(data = mtcars, aes(x = wt, y = mpg)) +
 
 ## Mappings and Layers
 
-```{r, out.height = 400, message = FALSE}
+```{r, out.height = 350, message = FALSE}
 ggplot(data = mtcars, aes(x = wt, y = mpg)) +
   geom_point() +
   geom_smooth()
@@ -757,7 +757,7 @@ ggplot(data = mtcars, aes(x = wt, y = mpg)) +
 
 ## Mappings and Layers
 
-```{r, out.height = 400, message = FALSE}
+```{r, out.height = 350, message = FALSE}
 mtcars$name = row.names(mtcars)
 ggplot(data = mtcars, aes(x = wt, y = mpg)) +
   geom_point() +
@@ -775,7 +775,7 @@ Points have `size`, `shape`, `colour`
 
 Rectangles have frame `colour` and `fill` colour
 
-```{r}
+```{r, out.height = 350}
 ggplot(data = mtcars, aes(x = wt, y = mpg, colour = factor(cyl))) +
   geom_point()
 ```
